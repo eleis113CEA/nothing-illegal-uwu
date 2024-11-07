@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Index Page with Secret Code</title>
+  <style>
+    /* Basic styling for layout */
+    body {
+      font-family: Courier, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 112vh;
+      background-color: #262318;
+    }
+    .container {
+      text-align: center;
+      padding: 2px;
+      border-radius: 1px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      background-color: #fff;
+      width: 300px;
+    }
+    .links, #loginForm {
+      display: none; /* Hidden initially */
+    }
+    .links a {
+      display: block;
+      margin: 10px 0;
+      color: #3498db;
+      text-decoration: none;
+    }
+    .links a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h2>Login Page</h2>
+  
+  <!-- Login Form -->
+  <form id="loginForm" onsubmit="return loginUser(event)">
+    <label for="username">Please State The Reason You:</label><br>
+    <input type="text" id="username" name="username" required><br><br>
+    <label for="password">Password:</label><br>
+    <input type="password" id="password" name="password" required><br><br>
+    <button type="submit">Login</button>
+  </form>
+  
+  <!-- Links (Initially hidden) -->
+  <div class="links">
+    <h3>Link Index</h3>
+    <a href="#link1">Link 1</a>
+    <a href="#link2">Link 2</a>
+    <a href="#link3">Link 3</a>
+  </div>
+</div>
+
+<script>
+  let secretCode = "eleis";
+  let typedCode = "";
+
+  // Listen for keypresses
+  document.addEventListener("keydown", (event) => {
+    // Add the new key to the typedCode string
+    typedCode += event.key;
+
+    // Check if typedCode matches the secretCode
+    if (typedCode.endsWith(secretCode)) {
+      // If correct, reveal the login form
+      document.getElementById("loginForm").style.display = "block";
+      document.querySelector(".links").style.display = "block";
+      
+      // Clear the typed code to prevent accidental re-activation
+      typedCode = "";
+    } else if (typedCode.length > secretCode.length) {
+      // Reset if more characters than the code length are typed without matching
+      typedCode = typedCode.slice(-secretCode.length);
+    }
+  });
+
+  // Login function
+  function loginUser(event) {
+    event.preventDefault(); // Prevent default form submission
+
+    // Hard-coded username and password for demonstration
+    const correctUsername = "Catabasis";
+    const correctPassword = "nevesis";
+    
+    // Get user input
+    const username = document.getElementById("username").value;
+    const password = document.getElementById("password").value;
+
+    // Check if credentials are correct
+    if (username === correctUsername && password === correctPassword) {
+      // Redirect to another website if login is successful
+      window.location.href = "https://www.example.com"; // Change this to your target URL
+    } else {
+      alert("Incorrect username or password");
+    }
+  }
+</script>
+
+</body>
+</html>
